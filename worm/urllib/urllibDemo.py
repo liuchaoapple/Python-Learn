@@ -99,3 +99,54 @@ print(res.read())
 '''
 
 ##Cookie
+'''
+from http import cookiejar
+from urllib import request
+cookie = cookiejar.CookieJar()
+handler =request.HTTPCookieProcessor(cookie)
+opener = request.build_opener(handler)
+res = opener.open('http://www.baidu.com')
+for item in cookie:
+    print(item.name + ' = ' + item.value)
+'''
+
+###MozillaCookieJar
+'''
+from http import cookiejar
+from urllib import request
+filename = 'cookie_baidu.txt'
+cookie = cookiejar.MozillaCookieJar(filename)
+handler =request.HTTPCookieProcessor(cookie)
+opener = request.build_opener(handler)
+res = opener.open('http://www.baidu.com')
+for item in cookie:
+    print(item.name + ' = ' + item.value)
+cookie.save(ignore_discard=True,ignore_expires=True)
+'''
+
+###LWPCookieJar
+'''
+from http import cookiejar
+from urllib import request
+filename = 'cookie_baidu.txt'
+cookie = cookiejar.LWPCookieJar(filename)
+handler =request.HTTPCookieProcessor(cookie)
+opener = request.build_opener(handler)
+res = opener.open('http://www.baidu.com')
+for item in cookie:
+    print(item.name + ' = ' + item.value)
+cookie.save(ignore_discard=True,ignore_expires=True)
+'''
+
+###读取cookie
+from http import cookiejar
+from urllib import request
+filename = 'cookie_baidu.txt'
+cookie = cookiejar.LWPCookieJar(filename)
+cookie.load(filename=filename,ignore_discard=True,ignore_expires=True)
+handler =request.HTTPCookieProcessor(cookie)
+opener = request.build_opener(handler)
+res = opener.open('http://www.baidu.com')
+print(res.read().decode('utf-8'))
+
+#异常处理模块urllib.error
